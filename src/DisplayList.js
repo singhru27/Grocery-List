@@ -3,7 +3,6 @@ import "./bootstrap-4.3.1-dist/css/bootstrap.min.css";
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
-
 import Button from 'react-bootstrap/Button';
 
 // Small wrapper class used to allow for card wrapping
@@ -31,7 +30,7 @@ export class DisplayList extends React.Component {
                     <br />
                     <Card.Subtitle> Category: {item.type} </Card.Subtitle>
                     <br />
-                    <Button variant="primary">Add to Cart</Button>
+                    <Button onClick={() => this.props.addToCart(item)} variant="primary">Add to Cart</Button>
                 </Card.Body>
             </Card>
         )

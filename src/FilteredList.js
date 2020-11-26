@@ -2,6 +2,7 @@ import React from 'react';
 import "./bootstrap-4.3.1-dist/css/bootstrap.min.css";
 import Nav from 'react-bootstrap/Nav'
 import { DisplayList } from "./DisplayList.js";
+import { AggregateList } from "./AggregateList.js";
 
 export class FilteredList extends React.Component {
     constructor(props) {
@@ -11,7 +12,8 @@ export class FilteredList extends React.Component {
             type: "All",
             sortOrder: "Descending",
             displayedItems: this.props.produceList,
-            aggregatedItems: []
+            aggregatedItems: {
+            }
         };
         // Binding the functions with the "this" keyword
         this.onSelectFilterShelfLife = this.onSelectFilterShelfLife.bind(this);
@@ -19,7 +21,7 @@ export class FilteredList extends React.Component {
         this.filterMatchingItems = this.filterMatchingItems.bind(this);
         this.priceBasedSort = this.priceBasedSort.bind(this);
         this.onSortSelect = this.onSortSelect.bind(this);
-
+        this.addToCart = this.addToCart.bind(this);
     }
     // Function used to filter items
     filterMatchingItems(item) {
@@ -36,7 +38,6 @@ export class FilteredList extends React.Component {
         }
 
     }
-
     // Function used to set the shelf_life filter
     onSelectFilterShelfLife(event) {
         this.setState(
@@ -45,7 +46,6 @@ export class FilteredList extends React.Component {
             }
         )
     }
-
     // Function used to set the type filter
     onSelectType(event) {
         this.setState(
@@ -54,7 +54,6 @@ export class FilteredList extends React.Component {
             }
         )
     }
-
     // Function used to set the sorting order
     onSortSelect(event) {
         this.setState(
@@ -63,7 +62,6 @@ export class FilteredList extends React.Component {
             }
         )
     }
-
     // Function used to sort the items
     priceBasedSort(a, b) {
         if (this.state.sortOrder === "Descending") {
@@ -75,8 +73,35 @@ export class FilteredList extends React.Component {
                 a.price - b.price
             );
         }
-
     }
+
+    // Function called when "Add to Cart" is pressed. This function increments the number in the cart for each item
+    addToCart(item) {
+        const nameKey = item.name;
+        if (nameKey in this.state.aggregatedItems) {
+            let currAggregatedItems = this.state.aggregatedItems;
+            let currPrice = currAggregatedItems[nameKey].price;
+            let currNumInCart = currAggregatedItems[nameKey].numInCart;
+            currAggregatedItems[nameKey] = {
+                numInCart: currNumInCart + 1,
+                price: currPrice
+            };
+            this.setState({
+                aggregatedItems: currAggregatedItems
+            })
+        } else {
+            let currAggregatedItems = this.state.aggregatedItems;
+            currAggregatedItems[nameKey] = {
+                numInCart: 1,
+                price: item.price,
+            }
+            this.setState({
+                aggregatedItems: currAggregatedItems
+            })
+        }
+    }
+
+    // Function called when the "Remove froom Cart is pressed". This function decrements the number in the cart for each item
 
     render() {
         return (
@@ -149,13 +174,18 @@ export class FilteredList extends React.Component {
                 </div>
                 <div className='row'>
                     <div className="col-12">
-                        <DisplayList produceList={this.state.displayedItems.filter(this.filterMatchingItems).sort(this.priceBasedSort)} />
+                        <DisplayList produceList={this.state.displayedItems.filter(this.filterMatchingItems).sort(this.priceBasedSort)} addToCart={this.addToCart} />
                     </div>
                 </div>
                 <div className='row'>
                     <div className="col-12 text-center">
                         <hr color="black" />
                         <h1>Your Shopping Cart </h1>
+                    </div>
+                </div>
+                <div className='row'>
+                    <div className="col-12 text-center">
+                        <AggregateList addToCart={this.addToCart} aggregatedItems={this.state.aggregatedItems} />
                     </div>
                 </div>
             </div>
