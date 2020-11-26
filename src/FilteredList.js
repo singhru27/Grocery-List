@@ -198,7 +198,7 @@ export class FilteredList extends React.Component {
                 </div>
                 <div className='row'>
                     <div className="col-12">
-                        <DisplayList produceList={this.state.displayedItems.filter(this.filterMatchingItems).sort(this.priceBasedSort)} addToCart={this.addToCart} />
+                        <DisplayList produceList={this.state.displayedItems.filter(this.filterMatchingItems).sort(this.priceBasedSort)} addToCart={this.addToCart} removeFromCart={this.removeFromCart} />
                     </div>
                 </div>
                 <div className='row'>
