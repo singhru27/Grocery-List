@@ -9,13 +9,17 @@ export class FilteredList extends React.Component {
         this.state = {
             shelf_life: 'All',
             type: "All",
-            sort: "Descending",
-            displayedItems: this.props.produceList
+            sortOrder: "Descending",
+            displayedItems: this.props.produceList,
+            aggregatedItems: []
         };
-        // Binding the 
+        // Binding the functions with the "this" keyword
         this.onSelectFilterShelfLife = this.onSelectFilterShelfLife.bind(this);
         this.onSelectType = this.onSelectType.bind(this);
         this.filterMatchingItems = this.filterMatchingItems.bind(this);
+        this.priceBasedSort = this.priceBasedSort.bind(this);
+        this.onSortSelect = this.onSortSelect.bind(this);
+
     }
     // Function used to filter items
     filterMatchingItems(item) {
@@ -51,6 +55,29 @@ export class FilteredList extends React.Component {
         )
     }
 
+    // Function used to set the sorting order
+    onSortSelect(event) {
+        this.setState(
+            {
+                sortOrder: event
+            }
+        )
+    }
+
+    // Function used to sort the items
+    priceBasedSort(a, b) {
+        if (this.state.sortOrder === "Descending") {
+            return (
+                b.price - a.price
+            );
+        } else {
+            return (
+                a.price - b.price
+            );
+        }
+
+    }
+
     render() {
         return (
             <div>
@@ -79,7 +106,7 @@ export class FilteredList extends React.Component {
                 </div>
                 <div className='row'>
                     <Nav.Item>
-                        <Nav.Link eventKey="disabled" disabled>Shelf Life</Nav.Link>
+                        <Nav.Link eventKey="disabled" disabled>Food Category</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
                         <Nav.Link eventKey="All" onSelect={this.onSelectType}>All</Nav.Link>
@@ -104,8 +131,31 @@ export class FilteredList extends React.Component {
                     </div>
                 </div>
                 <div className='row'>
+                    <Nav.Item>
+                        <Nav.Link eventKey="disabled" disabled>Sort Ordering</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link eventKey="Ascending" onSelect={this.onSortSelect}>Ascending</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link eventKey="Descending" onSelect={this.onSortSelect}>Descending</Nav.Link>
+                    </Nav.Item>
+                </div>
+                <div className='row'>
                     <div className="col-12">
-                        <DisplayList produceList={this.state.displayedItems.filter(this.filterMatchingItems)} />
+
+                        <p> Your Currently Selected Sort Ordering: {this.state.sortOrder}</p>
+                    </div>
+                </div>
+                <div className='row'>
+                    <div className="col-12">
+                        <DisplayList produceList={this.state.displayedItems.filter(this.filterMatchingItems).sort(this.priceBasedSort)} />
+                    </div>
+                </div>
+                <div className='row'>
+                    <div className="col-12 text-center">
+                        <hr color="black" />
+                        <h1>Your Shopping Cart </h1>
                     </div>
                 </div>
             </div>

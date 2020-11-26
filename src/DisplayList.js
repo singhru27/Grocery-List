@@ -1,8 +1,16 @@
 import React from 'react';
 import "./bootstrap-4.3.1-dist/css/bootstrap.min.css";
+import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
-import CardColumns from 'react-bootstrap/CardColumns';
+import CardDeck from 'react-bootstrap/CardDeck';
+
 import Button from 'react-bootstrap/Button';
+
+// Small wrapper class used to allow for card wrapping
+const cardWrapper = {
+    minWidth: "20%",
+    flexGrow: 0,
+};
 
 export class DisplayList extends React.Component {
     constructor(props) {
@@ -13,7 +21,7 @@ export class DisplayList extends React.Component {
     // Function that creates a card
     createCard(item) {
         return (
-            <Card style={{}}>
+            <Card style={cardWrapper}>
                 <Card.Img variant="top" src={item.image} />
                 <Card.Body>
                     <Card.Title>{item.name}</Card.Title>
@@ -30,9 +38,9 @@ export class DisplayList extends React.Component {
     }
     render() {
         return (
-            <CardColumns>
+            <CardDeck>
                 { this.props.produceList.map(this.createCard)}
-            </CardColumns>
+            </CardDeck>
         )
     }
 
