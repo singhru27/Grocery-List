@@ -22,6 +22,7 @@ export class FilteredList extends React.Component {
         this.priceBasedSort = this.priceBasedSort.bind(this);
         this.onSortSelect = this.onSortSelect.bind(this);
         this.addToCart = this.addToCart.bind(this);
+        this.removeFromCart = this.removeFromCart.bind(this);
     }
     // Function used to filter items
     filterMatchingItems(item) {
@@ -102,6 +103,29 @@ export class FilteredList extends React.Component {
     }
 
     // Function called when the "Remove froom Cart is pressed". This function decrements the number in the cart for each item
+    removeFromCart(item) {
+        const nameKey = item.name;
+        if (nameKey in this.state.aggregatedItems) {
+            let currAggregatedItems = this.state.aggregatedItems;
+            let currPrice = currAggregatedItems[nameKey].price;
+            let currNumInCart = currAggregatedItems[nameKey].numInCart;
+            currAggregatedItems[nameKey] = {
+                numInCart: currNumInCart - 1,
+                price: currPrice
+            };
+            // Removing the entire item from the aggregated item list if the number in cart reaches 0
+            console.log(currNumInCart);
+            if (currNumInCart - 1 === 0) {
+                delete currAggregatedItems[nameKey];
+                console.log(currAggregatedItems);
+            }
+            this.setState({
+                aggregatedItems: currAggregatedItems
+            })
+        } else {
+            return;
+        }
+    }
 
     render() {
         return (
@@ -185,7 +209,7 @@ export class FilteredList extends React.Component {
                 </div>
                 <div className='row'>
                     <div className="col-12 text-center">
-                        <AggregateList addToCart={this.addToCart} aggregatedItems={this.state.aggregatedItems} />
+                        <AggregateList addToCart={this.addToCart} removeFromCart={this.removeFromCart} aggregatedItems={this.state.aggregatedItems} />
                     </div>
                 </div>
             </div>

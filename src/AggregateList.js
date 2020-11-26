@@ -31,17 +31,17 @@ export class AggregateList extends React.Component {
                     <Card.Subtitle> Subtotal: ${currItem.numInCart * currItem.price} </Card.Subtitle>
                     <br />
                     <Button onClick={() => this.props.addToCart({ name: keyValue, price: currItem.price })} variant="primary">+</Button>
-                    <Button className="ml-4" variant="primary">-</Button>
+                    <Button onClick={() => this.props.removeFromCart({ name: keyValue, price: currItem.price })} className="ml-4" variant="primary">-</Button>
                 </Card.Body>
             </Card>
         )
     }
+    // Function used to sum up all the values in the current aggregated list
     render() {
         // Checking to see if there is anything currently being aggregated
         if (Object.keys(this.props.aggregatedItems).length === 0) {
             return (
-                <CardDeck>
-                </CardDeck>
+                <h3> Checkout Total: $0</h3>
             )
         } else {
             return (
