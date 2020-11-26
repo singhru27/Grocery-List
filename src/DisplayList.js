@@ -31,6 +31,7 @@ export class DisplayList extends React.Component {
                     <Card.Subtitle> Category: {item.type} </Card.Subtitle>
                     <br />
                     <Button onClick={() => this.props.addToCart(item)} variant="primary">Add to Cart</Button>
+
                 </Card.Body>
             </Card>
         )

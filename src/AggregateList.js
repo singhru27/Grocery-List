@@ -15,6 +15,7 @@ export class AggregateList extends React.Component {
     constructor(props) {
         super(props);
         this.createAggregatedCards = this.createAggregatedCards.bind(this);
+        this.sumUpValues = this.sumUpValues.bind(this);
     }
 
     // Function that creates aggregated cards
@@ -37,6 +38,10 @@ export class AggregateList extends React.Component {
         )
     }
     // Function used to sum up all the values in the current aggregated list
+    sumUpValues(accumulator, keyValue) {
+        let currItem = this.props.aggregatedItems[keyValue];
+        return accumulator + currItem.numInCart * currItem.price;
+    }
     render() {
         // Checking to see if there is anything currently being aggregated
         if (Object.keys(this.props.aggregatedItems).length === 0) {
@@ -45,9 +50,13 @@ export class AggregateList extends React.Component {
             )
         } else {
             return (
-                <CardDeck>
-                    {Object.keys(this.props.aggregatedItems).map(this.createAggregatedCards)}
-                </CardDeck>
+                <div>
+                    <CardDeck>
+                        {Object.keys(this.props.aggregatedItems).map(this.createAggregatedCards)}
+                    </CardDeck>
+                    <h3>Checkout total: $ {Object.keys(this.props.aggregatedItems).reduce(this.sumUpValues, 0)}</h3>
+                </div>
+
             )
         }
 
