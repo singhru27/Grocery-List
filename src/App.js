@@ -21,8 +21,8 @@ function App() {
     // List of products that we will be working with 
     const produceList = [
         { name: "Apple", shelf_life: "Short", type: "Fruit", price: 2, image: applePic },
-        { name: "Banana", shelf_life: "Short", type: "Vegetable", price: 1, image: bananaPic },
-        { name: "Lettuce", shelf_life: "Short", type: "Lettuce", price: 3, image: lettucePic },
+        { name: "Banana", shelf_life: "Short", type: "Fruit", price: 1, image: bananaPic },
+        { name: "Lettuce", shelf_life: "Short", type: "Vegetable", price: 3, image: lettucePic },
         { name: "Beans", shelf_life: "Long", type: "Nonperishable", price: 4, image: beansPic },
         { name: "Noodles", shelf_life: "Medium", type: "Nonperishable", price: .5, image: noodlesPic },
         { name: "Rice", shelf_life: "Short", type: "Nonperishable", price: 15, image: ricePic },
