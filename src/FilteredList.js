@@ -92,9 +92,16 @@ export class FilteredList extends React.Component {
             let currAggregatedItems = this.state.aggregatedItems;
             let currPrice = currAggregatedItems[nameKey].price;
             let currNumInCart = currAggregatedItems[nameKey].numInCart;
+            let currImage = currAggregatedItems[nameKey].image;
+            let currShelfLife = currAggregatedItems[nameKey].shelf_life;
+            let currType = currAggregatedItems[nameKey].type;
+
             currAggregatedItems[nameKey] = {
                 numInCart: currNumInCart + 1,
-                price: currPrice
+                price: currPrice,
+                image: currImage,
+                type: currType,
+                shelf_life: currShelfLife
             };
             this.setState({
                 aggregatedItems: currAggregatedItems
@@ -106,6 +113,10 @@ export class FilteredList extends React.Component {
             currAggregatedItems[nameKey] = {
                 numInCart: 1,
                 price: item.price,
+                image: item.image,
+                shelf_life: item.shelf_life,
+                type: item.type
+
             }
             this.setState({
                 aggregatedItems: currAggregatedItems
@@ -122,15 +133,20 @@ export class FilteredList extends React.Component {
             let currAggregatedItems = this.state.aggregatedItems;
             let currPrice = currAggregatedItems[nameKey].price;
             let currNumInCart = currAggregatedItems[nameKey].numInCart;
+            let currImage = currAggregatedItems[nameKey].image;
+            let currShelfLife = currAggregatedItems[nameKey].shelf_life;
+            let currType = currAggregatedItems[nameKey].type;
+
             currAggregatedItems[nameKey] = {
                 numInCart: currNumInCart - 1,
-                price: currPrice
+                price: currPrice,
+                image: currImage,
+                type: currType,
+                shelf_life: currShelfLife
             };
             // Removing the entire item from the aggregated item list if the number in cart reaches 0
-            console.log(currNumInCart);
             if (currNumInCart - 1 === 0) {
                 delete currAggregatedItems[nameKey];
-                console.log(currAggregatedItems);
             }
             this.setState({
                 aggregatedItems: currAggregatedItems

@@ -28,8 +28,13 @@ export class AggregateList extends React.Component {
         let currItem = this.props.aggregatedItems[keyValue];
         return (
             <Card style={cardWrapper}>
+                <Card.Img variant="top" src={currItem.image} />
                 <Card.Body>
                     <Card.Title>{keyValue}</Card.Title>
+                    <Card.Subtitle> Shelf Life: {currItem.shelf_life} </Card.Subtitle>
+                    <br />
+                    <Card.Subtitle> Type: {currItem.type} </Card.Subtitle>
+                    <br />
                     <Card.Subtitle> Price per Unit: ${currItem.price} </Card.Subtitle>
                     <br />
                     <Card.Subtitle> Number in Cart: {currItem.numInCart} </Card.Subtitle>
