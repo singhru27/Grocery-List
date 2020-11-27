@@ -54,7 +54,7 @@ export class AggregateList extends React.Component {
                     <CardDeck>
                         {Object.keys(this.props.aggregatedItems).map(this.createAggregatedCards)}
                     </CardDeck>
-                    <h3>Checkout total: $ {Object.keys(this.props.aggregatedItems).reduce(this.sumUpValues, 0)}</h3>
+                    <h3>Checkout Total: ${Object.keys(this.props.aggregatedItems).reduce(this.sumUpValues, 0)}</h3>
                 </div>
 
             )

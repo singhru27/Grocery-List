@@ -1,70 +1,23 @@
-# Getting Started with Create React App
+Component Design:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+My App is divided into several components/functions. The functionality of each is described below. 
+App.js - This is where my App is launched from. I instantiate my main component (FilteredList) from this function. This Filtered List is encased in a top level Bootstrap container. 
+FilteredList.js - This component creates instances of both the DisplayList and AggregateList components. In addition, this component class contains all of the functions that involve changing state in response to sorts, filters, and aggregation operations
+DisplayList.js - This component is created by the FilteredList.js component. This component is simply responsible for creating cards for each grocery item, dependent upon the FilteredList state
+AggregateList.js - This component is also created by the FilteredList.js component. This component is responsible for displaying the cards representing aggregated objects
 
-## Available Scripts
+Data Passing:
+The data is passed in the following fashion. 
+1. The App.js class creates the 12 possible grocery list items, and stores them in an array of objects. Each item has a name, price, category, shelf life, and image. This information is passed into the FilteredList component that is created within this component. 
+2. The FilteredList class filters the array of objects that was passed into it by the App.js, and passes into the DisplayList component which renders the objects on the page. The FilteredList class also creates an object of items to be included in the Aggregated section of the page, and passes this to the AggregateList class to be displayed accordingly. 
+3. The DisplayList class simply takes an array of objects that was passed in by the FilteredList class and displays it on the screen
+4. The AggregateList component simply takes an object of sub-objects that was passed in by the FilteredList class and displays it on the screen
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+User Interaction/Change of State:
+Below, the ways that the main user interaction features are handled are listed below. 
+1. Filtering
+The FilteredList class has a state object, which in turn has two keys called "shelf_life" and "type". These keys have corresponding values that correspond to the filtration that is to be applied on that attribute (i.e shelf_life may be short, medium or long). Whenever the user clicks the buttons on the top of the screen to change the filtration type, the state values are set accordingly. I then create a function that uses these state values to filter the list of Grocery Items passed in by the App.js as a prop to the FilteredList component. This filtered list of objects is then passed to the DisplayList class to be displayed. 
+2. Sort
+Similar to filtering, I also have a state variable that tracks whether the items should be sorted in ascending or descending order of price. The user can select this by clicking a button, which changes the state variable to whatever sort pattern that the user desires. Then, right before the list of filtered grocery items is passed to the DisplayList component to be rendered, I sort the items in whatever order the current state variable dictates. This mandates that the DisplayList displays the items in the desired order. 
+3. Aggregation
+In FilteredList, I have a state object called "aggregatedItems". The keys in this object consist of the different item names, and the values are again objects that contain the item price and quantity in cart. Within FilteredList, I have two functions that handle changing the aggregatedItems list. The addToCart increments the quantity for whatever food item is being added to the cart, while removeFromCart decrements the quantity. These functions are passed into the DisplayList component to be displayed along with the original item cards, to give users the option to add and remove items. This aggregatedItems list is then passed into the AggregateList component. The AggregateList component displays these items that are in the aggregatedList object, and sums up the total price for all the objects in the shopping cart as well. 
