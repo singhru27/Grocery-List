@@ -5,7 +5,8 @@ import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
 import Button from 'react-bootstrap/Button';
 
-// Small wrapper class used to allow for card wrapping
+// Small wrapper constant used to allow for card wrapping. This is used as a style
+// setting for the cards in our aggregated section
 const cardWrapper = {
     minWidth: "20%",
     flexGrow: 0,
@@ -18,7 +19,11 @@ export class AggregateList extends React.Component {
         this.sumUpValues = this.sumUpValues.bind(this);
     }
 
-    // Function that creates aggregated cards
+    /*
+     Function that creates aggregated cards. This function is used via the "map" operator. It 
+     accepts a keyValue (which is a name for the current item - i.e "Banana"). It then uses this key
+     value to create a card that displays the relevant information for the user. 
+     */
     createAggregatedCards(keyValue) {
         let currItem = this.props.aggregatedItems[keyValue];
         return (
@@ -38,16 +43,21 @@ export class AggregateList extends React.Component {
         )
     }
     // Function used to sum up all the values in the current aggregated list
+    // The item being summed is the price
     sumUpValues(accumulator, keyValue) {
         let currItem = this.props.aggregatedItems[keyValue];
         return accumulator + currItem.numInCart * currItem.price;
     }
     render() {
         // Checking to see if there is anything currently being aggregated
+        // If there is not anything being aggregated, then the checkout total
+        // is simply set to 0
         if (Object.keys(this.props.aggregatedItems).length === 0) {
             return (
                 <h3> Checkout Total: $0</h3>
             )
+            // If there are things being aggregated, we call map using the item names from the aggregatedItems
+            // object. This object was passed in as a prop to this class
         } else {
             return (
                 <div>

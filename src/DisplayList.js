@@ -5,7 +5,8 @@ import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
 import Button from 'react-bootstrap/Button';
 
-// Small wrapper class used to allow for card wrapping
+// Small wrapper constant used to allow for card wrapping. This is used as a style
+// setting for the cards in our aggregated section
 const cardWrapper = {
     minWidth: "20%",
     flexGrow: 0,
@@ -17,7 +18,11 @@ export class DisplayList extends React.Component {
         this.createCard = this.createCard.bind(this);
 
     }
-    // Function that creates a card
+    // Function that creates a card. Each card includes the item image, shelf_life, type, and price. 
+    // This function is used by calling "map" in the render function on the produceList, which was 
+    // passed in as a prop to this class from FilteredList. The buttons are assigned callback functions
+    // which were also passed in as props from the FilteredList class, which add and remove from the 
+    // aggregated shopping cart respectively
     createCard(item) {
         return (
             <Card style={cardWrapper}>
@@ -38,6 +43,8 @@ export class DisplayList extends React.Component {
         )
     }
     render() {
+        // All items are encased in a CardDeck, and the createCard() function is called via the map operator
+        // on each individual item within our produce list (which was passed in as a prop)
         return (
             <CardDeck>
                 { this.props.produceList.map(this.createCard)}

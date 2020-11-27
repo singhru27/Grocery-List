@@ -18,7 +18,7 @@ import ramenPic from "./assets/ramen.jpeg"
 import carrotPic from "./assets/carrot.jpg";
 
 function App() {
-    // List of products that we will be working with 
+    // List of products that we will be working with. Each item is given shelf_life, type, a price, and an image
     const produceList = [
         { name: "Apple", shelf_life: "Short", type: "Fruit", price: 2, image: applePic },
         { name: "Banana", shelf_life: "Short", type: "Fruit", price: 1, image: bananaPic },
@@ -34,7 +34,10 @@ function App() {
         { name: "Carrot", shelf_life: "Short", type: "Vegetable", price: 2, image: carrotPic },
     ]
     return (
-        // Introductory Title
+        /*
+        All information is stored in a top level Bootstrap container. The filtered list is created 
+        within this toplevel container to display all of the relevant information
+        */
         <div className="container">
             <div className="row">
                 <div className="col-12 text-center">
